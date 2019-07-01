@@ -1,0 +1,2787 @@
+{
+	"info": {
+		"_postman_id": "5f9bf5d8-0b2f-4ea0-8a6c-297d353df2ad",
+		"name": "APIs PagSeguro",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sessão",
+			"item": [
+				{
+					"name": "Criar Sessão",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8c5bd48b-282e-47bb-964b-8c8259c26e23",
+								"exec": [
+									"var env = postman.getEnvironmentVariable(\"env\");",
+									"",
+									"if(env == 'sandbox') {",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+									"    ",
+									"}else{",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "cfec624f-466f-43bb-9c2f-fbc8bab859e8",
+								"exec": [
+									"var responseJson = xml2Json(responseBody);",
+									"",
+									"//console.log(responseJson);",
+									"console.log(responseJson['session']['id']);",
+									"",
+									"postman.setGlobalVariable(\"session_id\", responseJson['session']['id']);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url_ws}}v2/sessions?email={{email}}&token={{token}}",
+							"host": [
+								"{{url_ws}}v2"
+							],
+							"path": [
+								"sessions"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{email}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Checkout Pagseguro",
+			"item": [
+				{
+					"name": "Redirect URL Encoded",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "773013a8-7003-47cf-a734-05b0f8a4b6ba",
+								"exec": [
+									"var env = postman.getEnvironmentVariable(\"env\");",
+									"",
+									"if(env == 'sandbox') {",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+									"    ",
+									"}else{",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "currency",
+									"value": "BRL",
+									"type": "text"
+								},
+								{
+									"key": "itemId1",
+									"value": "001",
+									"type": "text"
+								},
+								{
+									"key": "itemDescription1",
+									"value": "Item 1",
+									"type": "text"
+								},
+								{
+									"key": "itemAmount1",
+									"value": "169.90",
+									"type": "text"
+								},
+								{
+									"key": "itemQuantity1",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "reference",
+									"value": "124665c23f7896adff508377925",
+									"type": "text"
+								},
+								{
+									"key": "senderName",
+									"value": "Jônatas Crizel",
+									"type": "text"
+								},
+								{
+									"key": "senderAreaCode",
+									"value": "51",
+									"type": "text"
+								},
+								{
+									"key": "senderPhone",
+									"value": "988888888",
+									"type": "text"
+								},
+								{
+									"key": "senderEmail",
+									"value": "email@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "senderCPF",
+									"value": "01234567890",
+									"type": "text"
+								},
+								{
+									"key": "shippingType",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressRequired",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressCountry",
+									"value": "BRA",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressState",
+									"value": "RS",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressCity",
+									"value": "Porto Alegre",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressPostalCode",
+									"value": "91330500",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressStreet",
+									"value": "Rua X",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressNumber",
+									"value": "411",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressComplement",
+									"value": "301",
+									"type": "text"
+								},
+								{
+									"key": "extraAmount",
+									"value": "0.00",
+									"type": "text"
+								},
+								{
+									"key": "redirectURL",
+									"value": "http://loja.exemplo.com/compra/notificacao.php",
+									"type": "text"
+								},
+								{
+									"key": "notificationURL",
+									"value": "http://loja.exemplo.com/compra/notificacao.php",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_ws}}v2/checkout?email={{email}}&token={{token}}",
+							"host": [
+								"{{url_ws}}v2"
+							],
+							"path": [
+								"checkout"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{email}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Redirect XML",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "773013a8-7003-47cf-a734-05b0f8a4b6ba",
+								"exec": [
+									"var env = postman.getEnvironmentVariable(\"env\");",
+									"",
+									"if(env == 'sandbox') {",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+									"    ",
+									"}else{",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/xml; charset=ISO-8859-1",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<checkout>\n  <sender>\n    <name>Jose Comprador</name>\n    <email>comprador@uol.com.br</email>\n    <phone>\n      <areaCode>99</areaCode>\n      <number>999999999</number>\n    </phone>\n    <documents>\n      <document>\n        <type>CPF</type>\n        <value>11475714734</value>\n      </document>\n    </documents>\n  </sender>\n  <currency>BRL</currency>\n  <items>\n    <item>\n      <id>0001</id>\n      <description>Produto PagSeguroI</description>\n      <amount>99999.99</amount>\n      <quantity>1</quantity>\n      <weight>10</weight>\n      <shippingCost>1.00</shippingCost>\n    </item>\n  </items>\n  <redirectURL>http://lojamodelo.com.br/return.html</redirectURL>\n  <extraAmount>10.00</extraAmount>\n  <reference>REF1234</reference>\n  <shipping>\n    <address>\n      <street>Av. PagSeguro</street>\n      <number>9999</number>\n      <complement>99o andar</complement>\n      <district>Jardim Internet</district>\n      <city>Cidade Exemplo</city>\n      <state>SP</state>\n      <country>BRA</country>\n      <postalCode>99999999</postalCode>\n    </address>\n    <type>1</type>\n    <cost>1.00</cost>\n    <addressRequired>true</addressRequired>\n  </shipping>\n  <timeout>25</timeout>\n  <maxAge>999999999</maxAge>\n  <maxUses>999</maxUses>\n  <enableRecovery>false</enableRecovery>\n</checkout>"
+						},
+						"url": {
+							"raw": "{{url_ws}}v2/checkout?email={{email}}&token={{token}}",
+							"host": [
+								"{{url_ws}}v2"
+							],
+							"path": [
+								"checkout"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{email}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Checkout Transparente",
+			"item": [
+				{
+					"name": "Boleto",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c82abbb1-57c6-4219-8b23-b4792196e53b",
+								"exec": [
+									"var env = postman.getEnvironmentVariable(\"env\");",
+									"",
+									"if(env == 'sandbox') {",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+									"    ",
+									"}else{",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "paymentMethod",
+									"value": "boleto",
+									"type": "text"
+								},
+								{
+									"key": "paymentMode",
+									"value": "default",
+									"type": "text"
+								},
+								{
+									"key": "receiverEmail",
+									"value": "suporte@lojamodelo.com.br",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "currency",
+									"value": "BRL",
+									"type": "text"
+								},
+								{
+									"key": "extraAmount",
+									"value": "1.00",
+									"type": "text"
+								},
+								{
+									"key": "itemId1",
+									"value": "0001",
+									"type": "text"
+								},
+								{
+									"key": "itemDescription1",
+									"value": "Notebook Prata",
+									"type": "text"
+								},
+								{
+									"key": "itemAmount1",
+									"value": "24300.00",
+									"type": "text"
+								},
+								{
+									"key": "itemQuantity1",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "notificationURL",
+									"value": "https://sualoja.com.br/notifica.html",
+									"type": "text"
+								},
+								{
+									"key": "reference",
+									"value": "REF1234",
+									"type": "text"
+								},
+								{
+									"key": "senderName",
+									"value": "Jose Comprador",
+									"type": "text"
+								},
+								{
+									"key": "senderCPF",
+									"value": "01234567890",
+									"type": "text"
+								},
+								{
+									"key": "senderAreaCode",
+									"value": "11",
+									"type": "text"
+								},
+								{
+									"key": "senderPhone",
+									"value": "56273440",
+									"type": "text"
+								},
+								{
+									"key": "senderEmail",
+									"value": "comprador@sandbox.pagseguro.com.br",
+									"type": "text"
+								},
+								{
+									"key": "senderHash",
+									"value": "2064628ebf3c32da7703dd643106f85f48818136690ae4d8870c18873fb16539",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressStreet",
+									"value": "Av. Brig. Faria Lima",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressNumber",
+									"value": "1384",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressComplement",
+									"value": "5o andar",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressDistrict",
+									"value": "Jardim Paulistano",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressPostalCode",
+									"value": "01452002",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressCity",
+									"value": "Sao Paulo",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressState",
+									"value": "SP",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressCountry",
+									"value": "BRA",
+									"type": "text"
+								},
+								{
+									"key": "shippingType",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "shippingCost",
+									"value": "1.00",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_ws}}v2/transactions?email={{email}}&token={{token}}",
+							"host": [
+								"{{url_ws}}v2"
+							],
+							"path": [
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "receiverEmail",
+									"value": "suporte@lojamodelo.com.br",
+									"disabled": true
+								},
+								{
+									"key": "shippingType",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "shippingCost",
+									"value": "1.00",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "{{email}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Débito Online",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8cf2f9d0-1b89-4e21-8751-1d8de6bac813",
+								"exec": [
+									"var env = postman.getEnvironmentVariable(\"env\");",
+									"",
+									"if(env == 'sandbox') {",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+									"    ",
+									"}else{",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "paymentMode",
+									"value": "default",
+									"type": "text"
+								},
+								{
+									"key": "paymentMethod",
+									"value": "eft",
+									"type": "text"
+								},
+								{
+									"key": "bankName",
+									"value": "itau",
+									"type": "text"
+								},
+								{
+									"key": "receiverEmail",
+									"value": "suporte@lojamodelo.com.br",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "currency",
+									"value": "BRL",
+									"type": "text"
+								},
+								{
+									"key": "extraAmount",
+									"value": "1.00",
+									"type": "text"
+								},
+								{
+									"key": "itemId1",
+									"value": "0001",
+									"type": "text"
+								},
+								{
+									"key": "itemDescription1",
+									"value": "Notebook Prata",
+									"type": "text"
+								},
+								{
+									"key": "itemAmount1",
+									"value": "24300.00",
+									"type": "text"
+								},
+								{
+									"key": "itemQuantity1",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "notificationURL",
+									"value": "https://sualoja.com.br/notifica.html",
+									"type": "text"
+								},
+								{
+									"key": "reference",
+									"value": "REF1234",
+									"type": "text"
+								},
+								{
+									"key": "senderName",
+									"value": "Jose Comprador",
+									"type": "text"
+								},
+								{
+									"key": "senderCPF",
+									"value": "22111944785",
+									"type": "text"
+								},
+								{
+									"key": "senderAreaCode",
+									"value": "11",
+									"type": "text"
+								},
+								{
+									"key": "senderPhone",
+									"value": "56273440",
+									"type": "text"
+								},
+								{
+									"key": "senderEmail",
+									"value": "comprador@sandbox.pagseguro.com.br",
+									"type": "text"
+								},
+								{
+									"key": "senderHash",
+									"value": "240e6b7b1bfc07c546065b1aa132ac31d62b1aca1a76c193833338afd0babc61",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressRequired",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressStreet",
+									"value": "Av. Brig. Faria Lima",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressNumber",
+									"value": "1384",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressComplement",
+									"value": "5o andar",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressDistrict",
+									"value": "Jardim Paulistano",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressPostalCode",
+									"value": "01452002",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressCity",
+									"value": "Sao Paulo",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressState",
+									"value": "SP",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressCountry",
+									"value": "BRA",
+									"type": "text"
+								},
+								{
+									"key": "shippingType",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "shippingCost",
+									"value": "1.00",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_ws}}v2/transactions?email={{email}}&token={{token}}",
+							"host": [
+								"{{url_ws}}v2"
+							],
+							"path": [
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "receiverEmail",
+									"value": "suporte@lojamodelo.com.br",
+									"disabled": true
+								},
+								{
+									"key": "shippingType",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "shippingCost",
+									"value": "1.00",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "{{email}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cartao de Credito",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "015b9511-1f56-4297-b756-9d1aeec9de0b",
+								"exec": [
+									"var env = postman.getEnvironmentVariable(\"env\");",
+									"",
+									"if(env == 'sandbox') {",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+									"    ",
+									"}else{",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "paymentMode",
+									"value": "default",
+									"type": "text"
+								},
+								{
+									"key": "paymentMethod",
+									"value": "creditCard",
+									"type": "text"
+								},
+								{
+									"key": "receiverEmail",
+									"value": "suporte@lojamodelo.com.br",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "currency",
+									"value": "BRL",
+									"type": "text"
+								},
+								{
+									"key": "extraAmount",
+									"value": "1.00",
+									"type": "text"
+								},
+								{
+									"key": "itemId1",
+									"value": "0001",
+									"type": "text"
+								},
+								{
+									"key": "itemDescription1",
+									"value": "Notebook Prata",
+									"type": "text"
+								},
+								{
+									"key": "itemAmount1",
+									"value": "24300.00",
+									"type": "text"
+								},
+								{
+									"key": "itemQuantity1",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "notificationURL",
+									"value": "https://sualoja.com.br/notifica.html",
+									"type": "text"
+								},
+								{
+									"key": "reference",
+									"value": "REF1234",
+									"type": "text"
+								},
+								{
+									"key": "senderName",
+									"value": "Jose Comprador",
+									"type": "text"
+								},
+								{
+									"key": "senderCPF",
+									"value": "22111944785",
+									"type": "text"
+								},
+								{
+									"key": "senderAreaCode",
+									"value": "11",
+									"type": "text"
+								},
+								{
+									"key": "senderPhone",
+									"value": "56273440",
+									"type": "text"
+								},
+								{
+									"key": "senderEmail",
+									"value": "comprado@sandbox.pagseguro.com.br",
+									"type": "text"
+								},
+								{
+									"key": "senderHash",
+									"value": "85497d3ce3a7e3be505fb280a82b4d5bf5744e4c774737cf94aae1d61a10352d",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressRequired",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressStreet",
+									"value": "Av. Brig. Faria Lima",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressNumber",
+									"value": "1384",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressComplement",
+									"value": "5o andar",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressDistrict",
+									"value": "Jardim Paulistano",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressPostalCode",
+									"value": "01452002",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressCity",
+									"value": "Sao Paulo",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressState",
+									"value": "SP",
+									"type": "text"
+								},
+								{
+									"key": "shippingAddressCountry",
+									"value": "BRA",
+									"type": "text"
+								},
+								{
+									"key": "shippingType",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "shippingCost",
+									"value": "1.00",
+									"type": "text"
+								},
+								{
+									"key": "creditCardToken",
+									"value": "b15f93fdb77c43e8ba200fee77f76158",
+									"type": "text"
+								},
+								{
+									"key": "installmentQuantity",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "installmentValue",
+									"value": "24302.00",
+									"type": "text"
+								},
+								{
+									"key": "noInterestInstallmentQuantity",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "creditCardHolderName",
+									"value": "Jose Comprador",
+									"type": "text"
+								},
+								{
+									"key": "creditCardHolderCPF",
+									"value": "22111944785",
+									"type": "text"
+								},
+								{
+									"key": "creditCardHolderBirthDate",
+									"value": "27/10/1987",
+									"type": "text"
+								},
+								{
+									"key": "creditCardHolderAreaCode",
+									"value": "11",
+									"type": "text"
+								},
+								{
+									"key": "creditCardHolderPhone",
+									"value": "56273440",
+									"type": "text"
+								},
+								{
+									"key": "billingAddressStreet",
+									"value": "Av. Brig. Faria Lima",
+									"type": "text"
+								},
+								{
+									"key": "billingAddressNumber",
+									"value": "1384",
+									"type": "text"
+								},
+								{
+									"key": "billingAddressComplement",
+									"value": "5o andar",
+									"type": "text"
+								},
+								{
+									"key": "billingAddressDistrict",
+									"value": "Jardim Paulistano",
+									"type": "text"
+								},
+								{
+									"key": "billingAddressPostalCode",
+									"value": "01452002",
+									"type": "text"
+								},
+								{
+									"key": "billingAddressCity",
+									"value": "Sao Paulo",
+									"type": "text"
+								},
+								{
+									"key": "billingAddressState",
+									"value": "SP",
+									"type": "text"
+								},
+								{
+									"key": "billingAddressCountry",
+									"value": "BRA",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_ws}}v2/transactions?email={{email}}&token={{token}}",
+							"host": [
+								"{{url_ws}}v2"
+							],
+							"path": [
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{email}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Consultas",
+			"item": [
+				{
+					"name": "Consulta pelo Código de Referencia",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "2f13b4de-c1a7-4ea2-abcb-ed856295442e",
+								"exec": [
+									"var env = postman.getEnvironmentVariable(\"env\");",
+									"",
+									"if(env == 'sandbox') {",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+									"    ",
+									"}else{",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_ws}}v2/transactions?{{credenciais}}\n&reference=REF123456",
+							"host": [
+								"{{url_ws}}v2"
+							],
+							"path": [
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "{{credenciais}}\n",
+									"value": null
+								},
+								{
+									"key": "reference",
+									"value": "REF123456"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta de Notificação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "49af74cc-f9ac-42a0-99c5-4702b8376438",
+								"exec": [
+									"var env = postman.getEnvironmentVariable(\"env\");",
+									"",
+									"if(env == 'sandbox') {",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+									"    ",
+									"}else{",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_ws}}v3/transactions/notifications/{codigo_de_notificacao}?email={{email}}&token={{token}}",
+							"host": [
+								"{{url_ws}}v3"
+							],
+							"path": [
+								"transactions",
+								"notifications",
+								"{codigo_de_notificacao}"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{email}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta pelo Código de Transação",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7b0888a7-8b55-4198-ade8-59aefe23d89f",
+								"exec": [
+									"var env = postman.getEnvironmentVariable(\"env\");",
+									"",
+									"if(env == 'sandbox') {",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+									"    ",
+									"}else{",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_ws}}v3/transactions/notifications/{codigo_de_notificacao}?email={{email}}&token={{token}}",
+							"host": [
+								"{{url_ws}}v3"
+							],
+							"path": [
+								"transactions",
+								"notifications",
+								"{codigo_de_notificacao}"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{email}}"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notificação Direta",
+			"item": [
+				{
+					"name": "Notificação Direta",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3125fd15-dc9c-4f43-8eab-b40246215efb",
+								"exec": [
+									"var env = postman.getEnvironmentVariable(\"env\");",
+									"",
+									"if(env == 'sandbox') {",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+									"    ",
+									"}else{",
+									"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+									"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Host",
+								"value": "pagseguro.uol.com.br",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-Length",
+								"value": "85",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "notificationCode",
+									"value": "766B9C-AD4B044B04DA-77742F5FA653-E1AB24",
+									"type": "text"
+								},
+								{
+									"key": "notificationType",
+									"value": "transaction1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://facova.com/pagseguro/notification/notification.php",
+							"protocol": "http",
+							"host": [
+								"facova",
+								"com"
+							],
+							"path": [
+								"pagseguro",
+								"notification",
+								"notification.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UFA",
+			"item": [
+				{
+					"name": "Boleto",
+					"item": [
+						{
+							"name": "Gerar Boletos",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "5a3a6008-91a7-43ab-9580-fe34c4242f81",
+										"exec": [
+											"var env = postman.getEnvironmentVariable(\"env\");",
+											"",
+											"if(env == 'sandbox') {",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+											"    ",
+											"}else{",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json;charset=ISO-8859-1",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json;charset=ISO-8859-1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"reference\": \"PEDIDO123\",\n    \"firstDueDate\": \"2019-07-02\",\n    \"numberOfPayments\": \"4\",\n    \"periodicity\": \"monthly\",\n    \"amount\": \"19.87\",\n    \"instructions\": \"juros de 1% ao dia e mora de 5,00\",\n    \"description\": \"Assinatura de Sorvete\",\n    \"customer\": {\n        \"document\": {\n            \"type\": \"CPF\",\n            \"value\": \"01234567890\"\n        },\n        \"name\": \"Teste UFA\",\n        \"email\": \"compradora@xpto.com.br\",\n        \"phone\": {\n            \"areaCode\": \"11\",\n            \"number\": \"80804040\"\n        },\n        \"address\": {\n            \"postalCode\": \"01046010\",\n            \"street\": \"Av. Ipiranga\",\n            \"number\": \"100\",\n            \"district\": \"Republica\",\n            \"city\": \"Sao Paulo\",\n            \"state\": \"SP\"\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{url_ws}}recurring-payment/boletos?email={{email}}&token={{token}}",
+									"host": [
+										"{{url_ws}}recurring-payment"
+									],
+									"path": [
+										"boletos"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "{{email}}"
+										},
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Pagamento Recorrente",
+					"item": [
+						{
+							"name": "Criação do Plano",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "439bc8c2-0f8e-4155-bc31-ae4bf8ddf495",
+										"exec": [
+											"var env = postman.getEnvironmentVariable(\"env\");",
+											"",
+											"if(env == 'sandbox') {",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+											"    ",
+											"}else{",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.pagseguro.com.br.v3+json;charset=ISO-8859-1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"reference\": \"13142\",\n  \"preApproval\": {\n    \"name\": \"Plano mensal basico\",\n    \"charge\": \"AUTO\",\n    \"period\": \"MONTHLY\",\n    \"cancelURL\": \"http://meuplano.com.br/cancelamento\",\n    \"amountPerPayment\": \"1\",\n    \"expiration\": {\n      \"value\": \"1\",\n      \"unit\": \"years\"\n    }\n  }\n}"
+								},
+								"url": {
+									"raw": "{{url_ws}}pre-approvals/request?email={{email}}&token={{token}}",
+									"host": [
+										"{{url_ws}}pre-approvals"
+									],
+									"path": [
+										"request"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "{{email}}"
+										},
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Adesão do Plano",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "be66b008-d19a-42fd-97ed-4483b25b5c5b",
+										"exec": [
+											"var env = postman.getEnvironmentVariable(\"env\");",
+											"",
+											"if(env == 'sandbox') {",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+											"    ",
+											"}else{",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.pagseguro.com.br.v3+json;charset=ISO-8859-1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"plan\": \"D5BF38B18282BE8774CF6F8FDCF7742A\",\r\n  \"sender\": {\r\n    \"name\": \"Luizia\",\r\n    \"email\": \"luizia@sandbox.pagseguro.com.br\",\r\n    \"ip\": \"45.65.222.188\",\r\n    \"hash\": \"4d448a35e026b51e112adc65a3e4c467903d064080c0ff2b1514decc42bc901a\",\r\n    \"phone\": {\r\n      \"areaCode\": \"62\",\r\n      \"number\": \"993755122\"\r\n    },\r\n    \"address\": {\r\n      \"street\": \"Rio Claro\",\r\n      \"number\": \"S/N\",\r\n      \"complement\": \"\",\r\n      \"district\": \"Sao Francisco\",\r\n      \"city\": \"Iporá\",\r\n      \"state\": \"GO\",\r\n      \"country\": \"BRA\",\r\n      \"postalCode\": \"76200-000\"\r\n    },\r\n    \"documents\": [\r\n      {\r\n        \"type\": \"CPF\",\r\n        \"value\": \"65725344215\"\r\n      }\r\n    ]\r\n  },\r\n  \"paymentMethod\": {\r\n    \"type\": \"CREDITCARD\",\r\n    \"creditCard\": {\r\n      \"token\": \"8c37d2368aca449391cd91aa8f022cfe\",\r\n      \"holder\": {\r\n        \"name\": \"ACASSIO J MARQUES\",\r\n        \"birthDate\": \"20/08/1989\",\r\n        \"phone\": {\r\n          \"areaCode\": \"62\",\r\n          \"number\": \"993755122\"\r\n        },\r\n        \"documents\": [\r\n          {\r\n            \"type\": \"CPF\",\r\n            \"value\": \"01063207185\"\r\n          }\r\n        ],\r\n        \"billingAddress\": {\r\n          \"street\": \"Rio Claro\",\r\n          \"number\": \"S/N\",\r\n          \"complement\": \"\",\r\n          \"district\": \"Sao Francisco\",\r\n          \"city\": \"Iporá\",\r\n          \"state\": \"GO\",\r\n          \"country\": \"BRA\",\r\n          \"postalCode\": \"76200-000\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{url_ws}}pre-approvals?email={{email}}&token={{token}}",
+									"host": [
+										"{{url_ws}}pre-approvals"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "{{email}}"
+										},
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Desconto no pagamento",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "2f3f598d-ce46-415f-bdfb-10832709206f",
+										"exec": [
+											"var env = postman.getEnvironmentVariable(\"env\");",
+											"",
+											"if(env == 'sandbox') {",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+											"    ",
+											"}else{",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.pagseguro.com.br.v3+json;charset=ISO-8859-1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"plan\": \"D5BF38B18282BE8774CF6F8FDCF7742A\",\r\n  \"sender\": {\r\n    \"name\": \"Luizia\",\r\n    \"email\": \"luizia@sandbox.pagseguro.com.br\",\r\n    \"ip\": \"45.65.222.188\",\r\n    \"hash\": \"4d448a35e026b51e112adc65a3e4c467903d064080c0ff2b1514decc42bc901a\",\r\n    \"phone\": {\r\n      \"areaCode\": \"62\",\r\n      \"number\": \"993755122\"\r\n    },\r\n    \"address\": {\r\n      \"street\": \"Rio Claro\",\r\n      \"number\": \"S/N\",\r\n      \"complement\": \"\",\r\n      \"district\": \"Sao Francisco\",\r\n      \"city\": \"Iporá\",\r\n      \"state\": \"GO\",\r\n      \"country\": \"BRA\",\r\n      \"postalCode\": \"76200-000\"\r\n    },\r\n    \"documents\": [\r\n      {\r\n        \"type\": \"CPF\",\r\n        \"value\": \"65725344215\"\r\n      }\r\n    ]\r\n  },\r\n  \"paymentMethod\": {\r\n    \"type\": \"CREDITCARD\",\r\n    \"creditCard\": {\r\n      \"token\": \"8c37d2368aca449391cd91aa8f022cfe\",\r\n      \"holder\": {\r\n        \"name\": \"ACASSIO J MARQUES\",\r\n        \"birthDate\": \"20/08/1989\",\r\n        \"phone\": {\r\n          \"areaCode\": \"62\",\r\n          \"number\": \"993755122\"\r\n        },\r\n        \"documents\": [\r\n          {\r\n            \"type\": \"CPF\",\r\n            \"value\": \"01063207185\"\r\n          }\r\n        ],\r\n        \"billingAddress\": {\r\n          \"street\": \"Rio Claro\",\r\n          \"number\": \"S/N\",\r\n          \"complement\": \"\",\r\n          \"district\": \"Sao Francisco\",\r\n          \"city\": \"Iporá\",\r\n          \"state\": \"GO\",\r\n          \"country\": \"BRA\",\r\n          \"postalCode\": \"76200-000\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}"
+								},
+								"url": {
+									"raw": "{{url_ws}}pre-approvals?email={{email}}&token={{token}}",
+									"host": [
+										"{{url_ws}}pre-approvals"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "{{email}}"
+										},
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consulta de Notificação de Recorrencia",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "d8cd4197-0e9f-41d6-a9fc-6eff89c1e7ac",
+										"exec": [
+											"var env = postman.getEnvironmentVariable(\"env\");",
+											"",
+											"if(env == 'sandbox') {",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+											"    ",
+											"}else{",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.pagseguro.com.br.v3+json;charset=ISO-8859-1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url_ws}}pre-approvals/notifications/872B68-050B810B8132-B114AB3FA67A-B75EEE?email={{email}}&token={{token}}",
+									"host": [
+										"{{url_ws}}pre-approvals"
+									],
+									"path": [
+										"notifications",
+										"872B68-050B810B8132-B114AB3FA67A-B75EEE"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "{{email}}"
+										},
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar ordens de pagamento",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "52da1ad4-c73a-4eaf-9524-181c478a8943",
+										"exec": [
+											"var env = postman.getEnvironmentVariable(\"env\");",
+											"",
+											"if(env == 'sandbox') {",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+											"    ",
+											"}else{",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.pagseguro.com.br.v3+json;charset=ISO-8859-1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url_ws}}pre-approvals/notifications/872B68-050B810B8132-B114AB3FA67A-B75EEE?email={{email}}&token={{token}}",
+									"host": [
+										"{{url_ws}}pre-approvals"
+									],
+									"path": [
+										"notifications",
+										"872B68-050B810B8132-B114AB3FA67A-B75EEE"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "{{email}}"
+										},
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consulta pelo código da adesão",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "60ac16a4-af8a-46b3-a694-0fb887e9e761",
+										"exec": [
+											"var env = postman.getEnvironmentVariable(\"env\");",
+											"",
+											"if(env == 'sandbox') {",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+											"    ",
+											"}else{",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.pagseguro.com.br.v3+json;charset=ISO-8859-1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url_ws}}pre-approvals/8453FE649595387BB4C87FA3E4A49B5D?email={{email}}&token={{token}}",
+									"host": [
+										"{{url_ws}}pre-approvals"
+									],
+									"path": [
+										"8453FE649595387BB4C87FA3E4A49B5D"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "{{email}}"
+										},
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consulta dads do plano",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "7984cefe-c447-4540-9c0e-2096328f2eb1",
+										"exec": [
+											"var env = postman.getEnvironmentVariable(\"env\");",
+											"",
+											"if(env == 'sandbox') {",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+											"    ",
+											"}else{",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.pagseguro.com.br.v3+json;charset=ISO-8859-1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url_ws}}pre-approvals/8453FE649595387BB4C87FA3E4A49B5D?email={{email}}&token={{token}}",
+									"host": [
+										"{{url_ws}}pre-approvals"
+									],
+									"path": [
+										"8453FE649595387BB4C87FA3E4A49B5D"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "{{email}}"
+										},
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Transferencia",
+					"item": [
+						{
+							"name": "Consulta de Saldo",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url_ws}}transfer/balance?email={{email}}&token={{token}}",
+									"host": [
+										"{{url_ws}}transfer"
+									],
+									"path": [
+										"balance"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "{{email}}"
+										},
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Solicitação de Transferencia",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"receiverEmail\": \"DESTINATARIO@DOMINIO.COM\",\n\t\"amount\": \"1.00\",\n\t\"description\": \"Transferência referente pedido 12\"\n}"
+								},
+								"url": {
+									"raw": "{{url_ws}}transfer/requests?email={{email}}&token={{token}}",
+									"host": [
+										"{{url_ws}}transfer"
+									],
+									"path": [
+										"requests"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "{{email}}"
+										},
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Autorização",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.pagseguro.com.br.v1+json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url_ws}}transfer/authorize?email={{email}}&token={{token}}",
+									"host": [
+										"{{url_ws}}transfer"
+									],
+									"path": [
+										"authorize"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "{{email}}"
+										},
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Modelo de Aplicação",
+					"item": [
+						{
+							"name": "Solicitando Autorização",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "9be334d6-d6f3-44fe-a913-977e7dfcd058",
+										"exec": [
+											"var env = postman.getEnvironmentVariable(\"env\");",
+											"",
+											"if(env == 'sandbox') {",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+											"    ",
+											"}else{",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/xml; charset=ISO-8859-1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<authorizationRequest>\r\n    <reference>REF1234</reference>\r\n    <permissions>\r\n        <code>CREATE_CHECKOUTS</code>\r\n        <code>RECEIVE_TRANSACTION_NOTIFICATIONS</code>\r\n        <code>SEARCH_TRANSACTIONS</code>\r\n        <code>MANAGE_PAYMENT_PRE_APPROVALS</code>\r\n        <code>DIRECT_PAYMENT</code>\r\n    </permissions>\r\n    <redirectURL>http://seusite.com.br/redirect</redirectURL>\r\n    <notificationURL>http://seusite.com.br/notification</notificationURL>\r\n</authorizationRequest>"
+								},
+								"url": {
+									"raw": "{{url_ws}}/v2/authorizations/request/?appId={{appId}}&appKey={{appKey}}",
+									"host": [
+										"{{url_ws}}"
+									],
+									"path": [
+										"v2",
+										"authorizations",
+										"request",
+										""
+									],
+									"query": [
+										{
+											"key": "appId",
+											"value": "{{appId}}"
+										},
+										{
+											"key": "appKey",
+											"value": "{{appKey}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Direcionando para autorização",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "03fc9326-6b6f-42a3-95a1-e32db02009ca",
+										"exec": [
+											"var env = postman.getEnvironmentVariable(\"env\");",
+											"",
+											"if(env == 'sandbox') {",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+											"    ",
+											"}else{",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://pagseguro.uol.com.br/v2/authorization/request.jhtml?code=A5D4643744D1411D828DDD05F035B4C5",
+									"protocol": "https",
+									"host": [
+										"pagseguro",
+										"uol",
+										"com",
+										"br"
+									],
+									"path": [
+										"v2",
+										"authorization",
+										"request.jhtml"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": "A5D4643744D1411D828DDD05F035B4C5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consultando uma autorização pelo código de notificação",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "05a23327-ec41-4330-93fb-df468bbedcaf",
+										"exec": [
+											"var env = postman.getEnvironmentVariable(\"env\");",
+											"",
+											"if(env == 'sandbox') {",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+											"    ",
+											"}else{",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{url_ws}}v2/authorizations/notifications/A6D8D4A46B4A6B4A9BA994296F837B84E05F?appId={{appId}}&appKey={{appKey}}",
+									"host": [
+										"{{url_ws}}v2"
+									],
+									"path": [
+										"authorizations",
+										"notifications",
+										"A6D8D4A46B4A6B4A9BA994296F837B84E05F"
+									],
+									"query": [
+										{
+											"key": "appId",
+											"value": "{{appId}}"
+										},
+										{
+											"key": "appKey",
+											"value": "{{appKey}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consultando uma autorização pelo seu código",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "5b537127-c03e-401e-ade9-02d0001fb30b",
+										"exec": [
+											"var env = postman.getEnvironmentVariable(\"env\");",
+											"",
+											"if(env == 'sandbox') {",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_sand\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_sand\"));",
+											"    ",
+											"}else{",
+											"    postman.setGlobalVariable(\"url_main\", postman.getGlobalVariable(\"url_main_prod\"));",
+											"    postman.setGlobalVariable(\"url_ws\", postman.getGlobalVariable(\"url_ws_prod\"));",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{url_ws}}v2/authorizations/notifications/A6D8D4A46B4A6B4A9BA994296F837B84E05F?appId={{appId}}&appKey={{appKey}}",
+									"host": [
+										"{{url_ws}}v2"
+									],
+									"path": [
+										"authorizations",
+										"notifications",
+										"A6D8D4A46B4A6B4A9BA994296F837B84E05F"
+									],
+									"query": [
+										{
+											"key": "appId",
+											"value": "{{appId}}"
+										},
+										{
+											"key": "appKey",
+											"value": "{{appKey}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Split",
+					"item": [
+						{
+							"name": "Split Boleto",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.pagseguro.com.br.v3+xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "payment.mode",
+											"value": "default",
+											"type": "text"
+										},
+										{
+											"key": "payment.method",
+											"value": "boleto",
+											"type": "text"
+										},
+										{
+											"key": "currency",
+											"value": "BRL",
+											"type": "text"
+										},
+										{
+											"key": "item[1].id",
+											"value": "0001",
+											"type": "text"
+										},
+										{
+											"key": "item[1].description",
+											"value": "Product 1 Description",
+											"type": "text"
+										},
+										{
+											"key": "item[1].amount",
+											"value": "100.00",
+											"type": "text"
+										},
+										{
+											"key": "item[1].quantity",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "notificationURL",
+											"value": "https://yourstore.com.br/notification",
+											"type": "text"
+										},
+										{
+											"key": "reference",
+											"value": "ORDER123",
+											"type": "text"
+										},
+										{
+											"key": "sender.name",
+											"value": "Customer Name",
+											"type": "text"
+										},
+										{
+											"key": "sender.CPF",
+											"value": "22111944785",
+											"type": "text"
+										},
+										{
+											"key": "sender.areaCode",
+											"value": "11",
+											"type": "text"
+										},
+										{
+											"key": "sender.phone",
+											"value": "56273440",
+											"type": "text"
+										},
+										{
+											"key": "sender.email",
+											"value": "customer@uol.com.br",
+											"type": "text"
+										},
+										{
+											"key": "sender.hash",
+											"value": "c162e6131dbb9696e8b49147a9c5eacabac0cdca91458ee5177819d0a3c9d565",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.street",
+											"value": "Av. Brig. Faria Lima",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.number",
+											"value": "1384",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.complement",
+											"value": "5o andar",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.district",
+											"value": "Jardim Paulistano",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.postalCode",
+											"value": "01452002",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.city",
+											"value": "Sao Paulo",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.state",
+											"value": "SP",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.country",
+											"value": "BRA",
+											"type": "text"
+										},
+										{
+											"key": "shipping.type",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "shipping.cost",
+											"value": "0.00",
+											"type": "text"
+										},
+										{
+											"key": "primaryReceiver.publicKey",
+											"value": "PUB264371DC0C6B426994208666CCE8F71F",
+											"type": "text"
+										},
+										{
+											"key": "receiver[1].publicKey",
+											"value": "PUBBD642A8C069F41C99D776DAA346DA41E",
+											"type": "text"
+										},
+										{
+											"key": "receiver[1].split.amount",
+											"value": "20.00",
+											"type": "text"
+										},
+										{
+											"key": "receiver[2].publicKey",
+											"value": "PUB3D9CF002B4804851931E6E8DEB0B247F",
+											"type": "text"
+										},
+										{
+											"key": "receiver[2].split.amount",
+											"value": "30.00",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url_ws}}transactions?email={{email}}&token={{token}}",
+									"host": [
+										"{{url_ws}}transactions"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "{{email}}"
+										},
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Split Debito Online",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.pagseguro.com.br.v3+xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "payment.mode",
+											"value": "default",
+											"type": "text"
+										},
+										{
+											"key": "payment.method",
+											"value": "eft",
+											"type": "text"
+										},
+										{
+											"key": "bank.name",
+											"value": "itau",
+											"type": "text"
+										},
+										{
+											"key": "currency",
+											"value": "BRL",
+											"type": "text"
+										},
+										{
+											"key": "item[1].description",
+											"value": "Product 1 Description",
+											"type": "text"
+										},
+										{
+											"key": "item[1].amount",
+											"value": "100.00",
+											"type": "text"
+										},
+										{
+											"key": "item[1].quantity",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "notificationURL",
+											"value": "https://yourstore.com.br/notification",
+											"type": "text"
+										},
+										{
+											"key": "reference",
+											"value": "ORDER123",
+											"type": "text"
+										},
+										{
+											"key": "sender.name",
+											"value": "Customer Name",
+											"type": "text"
+										},
+										{
+											"key": "sender.CPF",
+											"value": "22111944785",
+											"type": "text"
+										},
+										{
+											"key": "sender.areaCode",
+											"value": "11",
+											"type": "text"
+										},
+										{
+											"key": "sender.phone",
+											"value": "56273440",
+											"type": "text"
+										},
+										{
+											"key": "sender.email",
+											"value": "customer@uol.com.br",
+											"type": "text"
+										},
+										{
+											"key": "sender.hash",
+											"value": "c162e6131dbb9696e8b49147a9c5eacabac0cdca91458ee5177819d0a3c9d565",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.street",
+											"value": "Av. Brig. Faria Lima",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.number",
+											"value": "1384",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.complement",
+											"value": "5o andar",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.district",
+											"value": "Jardim Paulistano",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.postalCode",
+											"value": "01452002",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.city",
+											"value": "Sao Paulo",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.state",
+											"value": "SP",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.country",
+											"value": "BRA",
+											"type": "text"
+										},
+										{
+											"key": "shipping.type",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "shipping.cost",
+											"value": "0.00",
+											"type": "text"
+										},
+										{
+											"key": "primaryReceiver.publicKey",
+											"value": "PUBCF30546BDF334CC3A59D772E3636D8D3",
+											"type": "text"
+										},
+										{
+											"key": "receiver[1].publicKey",
+											"value": "PUBCF30546BDF334CC3A59D772E3636D8D4",
+											"type": "text"
+										},
+										{
+											"key": "receiver[1].split.amount",
+											"value": "20.00",
+											"type": "text"
+										},
+										{
+											"key": "receiver[2].publicKey",
+											"value": "PUBCF30546BDF334CC3A59D772E3636D8D5",
+											"type": "text"
+										},
+										{
+											"key": "receiver[2].split.amount",
+											"value": "30.00",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url_ws}}transactions?email={{email}}&token={{token}}",
+									"host": [
+										"{{url_ws}}transactions"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "{{email}}"
+										},
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Split Cartao de Credito",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.pagseguro.com.br.v3+xml",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "payment.mode",
+											"value": "default",
+											"type": "text"
+										},
+										{
+											"key": "payment.method",
+											"value": "creditCard",
+											"type": "text"
+										},
+										{
+											"key": "currency",
+											"value": "BRL",
+											"type": "text"
+										},
+										{
+											"key": "item[1].description",
+											"value": "Product 1 Description",
+											"type": "text"
+										},
+										{
+											"key": "item[1].amount",
+											"value": "100.00",
+											"type": "text"
+										},
+										{
+											"key": "item[1].quantity",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "notificationURL",
+											"value": "https://yourstore.com.br/notification",
+											"type": "text"
+										},
+										{
+											"key": "reference",
+											"value": "ORDER123",
+											"type": "text"
+										},
+										{
+											"key": "sender.name",
+											"value": "Customer Name",
+											"type": "text"
+										},
+										{
+											"key": "sender.CPF",
+											"value": "22111944785",
+											"type": "text"
+										},
+										{
+											"key": "sender.areaCode",
+											"value": "11",
+											"type": "text"
+										},
+										{
+											"key": "sender.phone",
+											"value": "56273440",
+											"type": "text"
+										},
+										{
+											"key": "sender.email",
+											"value": "customer@uol.com.br",
+											"type": "text"
+										},
+										{
+											"key": "sender.hash",
+											"value": "c162e6131dbb9696e8b49147a9c5eacabac0cdca91458ee5177819d0a3c9d565",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.street",
+											"value": "Av. Brig. Faria Lima",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.number",
+											"value": "1384",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.complement",
+											"value": "5o andar",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.district",
+											"value": "Jardim Paulistano",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.postalCode",
+											"value": "01452002",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.city",
+											"value": "Sao Paulo",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.state",
+											"value": "SP",
+											"type": "text"
+										},
+										{
+											"key": "shipping.address.country",
+											"value": "BRA",
+											"type": "text"
+										},
+										{
+											"key": "shipping.type",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "shipping.cost",
+											"value": "0.00",
+											"type": "text"
+										},
+										{
+											"key": "installment.quantity",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "installment.value",
+											"value": "50.00",
+											"type": "text"
+										},
+										{
+											"key": "installment.noInterestInstallmentQuantity",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "creditCard.token",
+											"value": "4as56d4a56d456as456dsa",
+											"type": "text"
+										},
+										{
+											"key": "creditCard.holder.name",
+											"value": "Customer Name",
+											"type": "text"
+										},
+										{
+											"key": "creditCard.holder.CPF",
+											"value": "22111944785",
+											"type": "text"
+										},
+										{
+											"key": "creditCard.holder.birthDate",
+											"value": "27/10/1987",
+											"type": "text"
+										},
+										{
+											"key": "creditCard.holder.areaCode",
+											"value": "11",
+											"type": "text"
+										},
+										{
+											"key": "creditCard.holder.phone",
+											"value": "56273440",
+											"type": "text"
+										},
+										{
+											"key": "billingAddress.street",
+											"value": "Av. Brig. Faria Lima",
+											"type": "text"
+										},
+										{
+											"key": "billingAddress.number",
+											"value": "1384",
+											"type": "text"
+										},
+										{
+											"key": "billingAddress.complement",
+											"value": "5o andar",
+											"type": "text"
+										},
+										{
+											"key": "billingAddress.district",
+											"value": "Jardim Paulistano",
+											"type": "text"
+										},
+										{
+											"key": "billingAddress.postalCode",
+											"value": "01452002",
+											"type": "text"
+										},
+										{
+											"key": "billingAddress.city",
+											"value": "Sao Paulo",
+											"type": "text"
+										},
+										{
+											"key": "billingAddress.state",
+											"value": "SP",
+											"type": "text"
+										},
+										{
+											"key": "billingAddress.country",
+											"value": "BRA",
+											"type": "text"
+										},
+										{
+											"key": "primaryReceiver.publicKey",
+											"value": "PUBCF30546BDF334CC3A59D772E3636D8D3",
+											"type": "text"
+										},
+										{
+											"key": "receiver[1].publicKey",
+											"value": "PUBCF30546BDF334CC3A59D772E3636D8D4",
+											"type": "text"
+										},
+										{
+											"key": "receiver[1].split.amount",
+											"value": "20.00",
+											"type": "text"
+										},
+										{
+											"key": "receiver[2].publicKey",
+											"value": "PUBCF30546BDF334CC3A59D772E3636D8D5",
+											"type": "text"
+										},
+										{
+											"key": "receiver[2].split.amount",
+											"value": "30.00",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url_ws}}transactions?email={{email}}&token={{token}}",
+									"host": [
+										"{{url_ws}}transactions"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "{{email}}"
+										},
+										{
+											"key": "token",
+											"value": "{{token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Connect Parcerias (Sphinx)",
+					"item": [],
+					"_postman_isSubFolder": true
+				}
+			]
+		}
+	]
+}
